@@ -68,7 +68,7 @@ Session::Impl::Impl() {
         curl_easy_setopt(curl, CURLOPT_NOPROGRESS, 1L);
         curl_easy_setopt(curl, CURLOPT_MAXREDIRS, 50L);
         curl_easy_setopt(curl, CURLOPT_ERRORBUFFER, curl_->error);
-        curl_easy_setopt(curl, CURLOPT_COOKIEFILE, "");
+        curl_easy_setopt(curl, CURLOPT_COOKIEFILE, "");        
 #ifdef CPR_CURL_NOSIGNAL
         curl_easy_setopt(curl, CURLOPT_NOSIGNAL, 1L);
 #endif
@@ -78,6 +78,11 @@ Session::Impl::Impl() {
         curl_easy_setopt(curl, CURLOPT_TCP_KEEPALIVE, 1L);
 #endif
 #endif
+#endif
+#if (LIBCURL_VERSION_MAJOR >= 7 && LIBCURL_VERSION_MINOR >= 21 && LIBCURL_VERSION_PATCH >= 6)
+       curl_easy_setopt(curl,  CURLOPT_ACCEPT_ENCODING, "");
+#else
+       curl_easy_setopt(curl,  CURLOPT_ENCODING, "");
 #endif
     }
 }
